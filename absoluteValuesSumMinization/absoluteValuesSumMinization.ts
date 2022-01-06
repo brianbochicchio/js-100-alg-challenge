@@ -1,4 +1,4 @@
-/* In the video provided by the challenge editor we are seeking the median value of the "pre-sorted" arrays below
+/* In the video provided by the challenge editor we are seeking the median value of the sorted arrays below
     I'm not sure that is really what the challenge is asking... 
     https://github.com/PacktPublishing/100-JavaScript-Algorithm-Challenges/tree/master/absoluteValuesSumMinization
 
@@ -11,25 +11,21 @@
     divides the lenth of the array by 2.  In the case of even he subtracts 1 and in the case of of odd he 
     uses the floor.  The resulting answers are 4,4,7,7
 
-    My results using the logic above are 4,6,6,6 
+    My results using the logic above are 4,6,6,6  using floor to round down the number and 4, 7, 7, 6 if I use ceil
+
 
     I need to re-visit this 
 */
 
 function absoluteValuesSumMinimization(a: number[]): number {
-    a.sort()
+    //a.sort();
+    const middle = Math.floor(a.length / 2);
     if (a.length % 2 === 0) {
-        let middle = Math.floor(a.length / 2)
-        console.log(middle)
-        let median = Math.ceil((a[middle] + a[middle]) / 2)
-        console.log(median)
-        return median
+        return Math.ceil((a[middle] + a[middle + 1]) / 2);
         
     } else {
-        return a[Math.floor(a.length / 2)];
+        return a[middle];
     }
-
-   
 
 }
 
