@@ -9,6 +9,15 @@ Got the logic in for the comment above. Need to re-factor the code. Code associa
 little klugdy because in one case I am adding 2 to it only to take those two away. I think it could be better 
 organized too.  
 
+[ '****************',
+  '*     ghi      *',
+  '*    nachos    *',
+  '*      z       *',
+  '*     says     *',
+  '*Cracker Barrel*',
+  '****************' ]
+
+
 */
 
 function addBorder(picture :string[]) : any {
