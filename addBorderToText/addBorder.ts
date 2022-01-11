@@ -33,9 +33,9 @@ const getLongestStringLength = (picture : string[]) : number => {
 
 const addTopBottomBorders = (picture : string[], longestStringLength: number) : any =>  {
     longestStringLength += 4;    
-    const longBorder : string = borderMark.repeat(longestStringLength);
-    picture.push(longBorder);
-    picture.unshift(longBorder);
+    const border : string = borderMark.repeat(longestStringLength);
+    picture.push(border);
+    picture.unshift(border);
 }
 
 function addBorder(picture :string[]) : any {
