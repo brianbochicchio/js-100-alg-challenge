@@ -1,54 +1,62 @@
 /*
+Original Challenge: 
 Given the array ["abc", "ded"] add a border of * around the text.
 Calling addBorder would result in the following array in the console ["*****", "*abc*", "*ded*", "*****"]
 
-Two ways to make this better would be to base the border mark on the longest array element and 
-have it pad shorter ones with spaces so it would always render as a square or rectangle. 
+Expanding on the Challenge:
 
-Got the logic in for the comment above. Need to re-factor the code. Code associated with maxBorderLen is a 
-little klugdy because in one case I am adding 2 to it only to take those two away. I think it could be better 
-organized too.  
+[ '************',
+  '*   the    *',
+  '*   cow    *',
+  '* ran away *',
+  '*   with   *',
+  '*   the    *',
+  '*  spoon   *',
+  '************' ]
 
-[ '****************',
-  '*     ghi      *',
-  '*    nachos    *',
-  '*      z       *',
-  '*     says     *',
-  '*Cracker Barrel*',
-  '****************' ]
-
+Have the function accept strings of various lengths and center align the output with some extra padding for a clean
 
 */
 
-function addBorder(picture :string[]) : any {
-    const borderMark : string = "*"
-    let maxBorderLen :number = 0;
-    for (let i = 0; i < picture.length; i++) {
-        if (picture[i].length > maxBorderLen) {
-            maxBorderLen = picture[i].length;
-        }  
-        
-    }
-    maxBorderLen += 2;    
-    const longBorder : string = borderMark.repeat(maxBorderLen);
+const borderMark : string = '*';
 
+// Need this to calculate the top and bottom border lengths and padding amount
+const getLongestStringLength = (picture : string[]) : number => {
+    let longestStringLength = 0;
     for (let i = 0; i < picture.length; i++) {
-        let whiteSpace = ( maxBorderLen - 2) - picture[i].length;
-        console.log(whiteSpace)
-        let leftPad = Math.floor(whiteSpace / 2);
-        let rightPad = Math.ceil(whiteSpace / 2);
-        console.log(leftPad,rightPad);
-        picture[i] = picture[i].padStart(picture[i].length + leftPad, " ");
-        picture[i] = picture[i].padEnd(picture[i].length + rightPad, " ");
-      
-        picture[i] = `${borderMark}${picture[i]}${borderMark}`;
-    }
+        if (picture[i].length > longestStringLength) {
+            longestStringLength = picture[i].length;
+        }  
+    }   
+    return longestStringLength;
+}
+
+const addTopBottomBorders = (picture : string[], longestStringLength: number) : any =>  {
+    longestStringLength += 4;    
+    const longBorder : string = borderMark.repeat(longestStringLength);
     picture.push(longBorder);
     picture.unshift(longBorder);
+}
 
+function addBorder(picture :string[]) : any {
+    let longestStringLength = getLongestStringLength(picture);
+
+    for (let i = 0; i < picture.length; i++) {
+        
+        let totalPadding : number = longestStringLength - picture[i].length;
+        let leftPad : number = Math.floor(totalPadding / 2);
+        let rightPad : number = Math.ceil(totalPadding / 2);
+    
+        picture[i] = picture[i].padStart(picture[i].length + leftPad + 1, " "); 
+        // adding padding changed the current item's length
+        picture[i] = picture[i].padEnd(picture[i].length + rightPad + 1, " ");  
+        picture[i] = `${borderMark}${picture[i]}${borderMark}`;
+    }
+
+    addTopBottomBorders(picture, longestStringLength);
 
     return picture;
 }
-//console.log(addBorder(["abc", "ded"]));
-//console.log(addBorder(["abc"]));
-console.log(addBorder(["ghi", "nachos", 'z', 'says', "Cracker Barrel"]));
+//console.log(addBorder(["123", "456"]));
+//console.log(addBorder(["w", "x", "y", "z"]));
+console.log(addBorder(["the", "cow", "ran away", "with", "the", "spoon"]));
